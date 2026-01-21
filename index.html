@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Social Boost 2026</title>
+    <link href="https://fonts.googleapis.com" rel="stylesheet">
+    <style>
+        :root { --primary: #00f2ea; --secondary: #ff0050; --bg: #0f0f0f; }
+        body { font-family: 'Tajawal', sans-serif; background: var(--bg); color: white; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+        .card { background: rgba(255,255,255,0.05); padding: 30px; border-radius: 15px; text-align: center; border: 1px solid rgba(255,255,255,0.1); width: 350px; }
+        input { width: 100%; padding: 12px; margin: 15px 0; border-radius: 8px; border: none; background: #222; color: white; box-sizing: border-box; }
+        button { width: 100%; padding: 12px; border-radius: 8px; border: none; background: linear-gradient(45deg, var(--primary), var(--secondary)); color: white; font-weight: bold; cursor: pointer; }
+        #status { margin-top: 15px; font-size: 13px; color: #888; }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h2>🚀 سوشيال بوست 2026</h2>
+        <p>أدخل الرابط للبدء فوراً</p>
+        <input type="text" id="targetUrl" placeholder="رابط الحساب هنا">
+        <button onclick="sendOrder()">ابدأ الرشق الآن</button>
+        <div id="status"></div>
+    </div>
+
+    <script>
+        async function sendOrder() {
+            const url = document.getElementById('targetUrl').value;
+            const status = document.getElementById('status');
+            if(!url) return alert("ضع الرابط أولاً");
+
+            status.innerText = "جاري تنفيذ الطلب عبر السحاب...";
+            
+            try {
+                // الربط مع API فيرسل الداخلي
+                const res = await fetch(`/api/order?url=${encodeURIComponent(url)}`);
+                const data = await res.json();
+                
+                if(data.status === "completed") {
+                    status.innerText = "✅ نجح الرشق بالحساب: " + data.user;
+                    status.style.color = "#00ff00";
+                } else {
+                    status.innerText = "❌ حدث خطأ: " + (data.details || "فشل السيرفر");
+                    status.style.color = "#ff4444";
+                }
+            } catch (e) {
+                status.innerText = "❌ لا يمكن الاتصال بالسيرفر حالياً";
+            }
+        }
+    </script>
+</body>
+</html>
