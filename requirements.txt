@@ -1,4 +1,4 @@
-undetected-chromedriver
+flask
 selenium
+undetected-chromedriver
 webdriver-manager
-
